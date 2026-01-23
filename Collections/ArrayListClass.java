@@ -8,6 +8,16 @@ class MyComparator implements Comparator<Integer> {
     }
 }
 
+class StringLengthComparator implements comparator<String> {
+
+    @Override
+    public int compare(String o1, String o2) {
+        return o1.length() - o2.length();
+    }
+}
+
+
+
 // 5 3
 
 public class ArrayListClass {
@@ -64,13 +74,21 @@ public class ArrayListClass {
 
         // comparator contain compare object
 
+        // using lambda
 
+        list.sort((a, b) -> a - b);
 
+        Comparator<String> comparator = Comparator.comparing(Student :: getGpa()).reversed().thenComparing(Student :: getName());
 
-
-
-
-
+        students.sort((o1, o2) -> {
+            if (o2.getGpa() - o1.getGpa() > 0) {
+                return 1;
+            } else if (o2.getGpa() - o1.getGpa() < 0) {
+                return -1;
+            } else {
+                return o1.getName().compareTo(o2.getName());
+            }
+        }); 
 
       }
 }
