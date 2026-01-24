@@ -13,8 +13,20 @@ public class MapDemo {
 
         System.out.println("Alice's age : " + map.get("Alice"));
 
+        Set<Integer> keys = map.keySet();
+        for (int i : keys) {
+            System.out.println(map.get(i));
+        }
+
+        for (int i : map.keySet()) {
+            System.out.println(map.get(i));
+        }
+
+        Set<Map.Entry<Integer, String>> entries = map.entrySet();
+
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             System.out.println(entry.getKey() + " -> " + entry.getValue());
+            entry.setValue(entry.getValue().toUpperCase());
         }
 
         System.out.println("Contains key 'Bob' ?" + map.containsKey("Bob"));
@@ -52,6 +64,15 @@ public class MapDemo {
         System.out.println("TailMap (>= Bob): " + tm.tailMap("Bob"));
         System.out.println("SubMap (Alice to Chralie): " + tm.subMap("Alice", "Chralie"));
     }
+
+    // Key value pair
+    // Map doesn't extend collection interface
+
+    // Order
+    // Some implementation maintain insertion order
+    // HashMap(no order), LinkedHashMap(insertion order), TreeMap(natural order)
+
+
 
     public static void main(String args[]) {
 
