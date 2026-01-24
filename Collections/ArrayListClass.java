@@ -8,7 +8,7 @@ class MyComparator implements Comparator<Integer> {
     }
 }
 
-class StringLengthComparator implements comparator<String> {
+class StringLengthComparator implements Comparator<String> {
 
     @Override
     public int compare(String o1, String o2) {
@@ -78,17 +78,44 @@ public class ArrayListClass {
 
         list.sort((a, b) -> a - b);
 
-        Comparator<String> comparator = Comparator.comparing(Student :: getGpa()).reversed().thenComparing(Student :: getName());
+        // Comparator<String> comparator = Comparator.comparing(Student :: getGpa()).reversed().thenComparing(Student :: getName());
 
-        students.sort((o1, o2) -> {
-            if (o2.getGpa() - o1.getGpa() > 0) {
-                return 1;
-            } else if (o2.getGpa() - o1.getGpa() < 0) {
-                return -1;
-            } else {
-                return o1.getName().compareTo(o2.getName());
+        // students.sort((o1, o2) -> {
+        //     if (o2.getGpa() - o1.getGpa() > 0) {
+        //         return 1;
+        //     } else if (o2.getGpa() - o1.getGpa() < 0) {
+        //         return -1;
+        //     } else {
+        //         return o1.getName().compareTo(o2.getName());
+        //     }
+        // }); 
+
+        // ArrayList is not thraedsafe example
+
+        ArrayList<Integer> list10 = new ArrayList<>();
+
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                list.add(i);
             }
-        }); 
+        });
 
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                list.add(i);
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Size of list :" + list.size());
       }
 }
